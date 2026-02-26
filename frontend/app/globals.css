@@ -49,7 +49,10 @@
 
 @theme {
   /* Terracotta / Burnt Orange */
+  --color-burntOrange-50: #fbf2ef;
+  --color-burntOrange-100: #f7e5df;
   --color-burntOrange-400: #d98266;
+  --color-burntOrange-500: #ce6d48;
   --color-burntOrange-600: #C45B38;
   --color-burntOrange-700: #a34a2c;
 

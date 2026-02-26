@@ -26,11 +26,11 @@ const Header = async () => {
       <nav className="container mx-auto px-4 h-16 flex items-center justify-between">
         <Link href={user ? "/dashboard" : "/"}>
           <Image
-            src="/logo2.png"
+            src="/logofinal.png"
             alt="ScrapChef Logo"
             width={60}
             height={60}
-            className="w-17"
+            className="w-20"
           />
         </Link>
         <div
@@ -59,22 +59,27 @@ const Header = async () => {
             {/* How to Cook */}
 
             {user && (
-              <PricingModal
-                subscriptionTier={user.subscriptionTier}>
-                    <Badge>
-                        <Sparkles
-                        className={`h-3 w-3 ${
-                            user.subscriptionTier === "pro"
-                            ? "text-white fill-white/20"
-                            : "text-stone-500"
-                        }`}
-                        />
-                        <span>
-                            {user.subscriptionTier === "pro" ? "Pro Chef" : "Free Plan"}
-                        </span>
-                        
-                    </Badge>
-                </PricingModal>
+              <PricingModal subscriptionTier={user.subscriptionTier}>
+                <Badge
+                  variant="outline"
+                  className={`flex h-8 px-3 gap-1.5 rounded-full text-xs font-semibold transition-all ${
+                    user.subscriptionTier === "pro"
+                      ? "bg-linear-to-r from-burntOrange-600 to-amber-500 text-white border-none shadow-sm"
+                      : "bg-stone-200/50 text-stone-600 border-stone-200 cursor-pointer hover:bg-stone-300/50 hover:border-stone-300"
+                  }`}
+                >
+                  <Sparkles
+                    className={`h-3 w-3 ${
+                      user.subscriptionTier === "pro"
+                        ? "text-white fill-white/20"
+                        : "text-stone-500"
+                    }`}
+                  />
+                  <span>
+                    {user.subscriptionTier === "pro" ? "Pro Chef" : "Free Plan"}
+                  </span>
+                </Badge>
+              </PricingModal>
             )}
 
             <UserDropdown />
