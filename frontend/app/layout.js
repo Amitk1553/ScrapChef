@@ -1,34 +1,53 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
-import Header from "@/components/Header";
 import { ClerkProvider } from "@clerk/nextjs";
-import { neobrutalism } from '@clerk/themes'
-import { Toaster } from "@/components/ui/sonner";
+import { Toaster } from "sonner";
+import Header from "@/components/Header";
+import { neobrutalism } from "@clerk/themes";
+import Image from "next/image";
 
 const inter = Inter({ subsets: ["latin"] });
+
 export const metadata = {
-  title: "ScrapChef - AI Recipe Platform",
-  description: "AI-powered recipe platform for developers",
+  title: "ScrapChef - AI Recipes Platform",
+  description: "",
 };
 
 export default function RootLayout({ children }) {
   return (
-    <ClerkProvider appearance={{ baseTheme: neobrutalism}}>
-    <html lang="en" suppressHydrationWarning>
-      <body className={`${inter.className}`}>
-        <Header />
-        <main className="min-h-screen">{children}</main>
-        <Toaster richColors />
-        <footer className="py-8 px-4 border-t">
-          <div className="max-w-6xl mx-auto flex justify-center
-          items-center">
-            <p className="text-stone-500 text-sm">
-              Made with ❤️ by Amit
-            </p>
-          </div>
-        </footer> 
-      </body>
-    </html>
+    <ClerkProvider
+      appearance={{
+        baseTheme: neobrutalism,
+      }}
+    >
+      <html lang="en" suppressHydrationWarning>
+        <head>
+          <link rel="icon" href="/logofinal.png" sizes="any" />
+        </head>
+        <body className={`${inter.className}`}>
+          <Header />
+          <main className="min-h-screen">{children}</main>
+          <Toaster richColors />
+
+          {/* Footer */}
+          <footer className="py-8 px-4 border-t">
+            <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+              <div className="flex items-center gap-3">
+                <Image
+                  src="/logofinal.png"
+                  alt="ScrapChef Logo"
+                  width={48}
+                  height={48}
+                  className="w-14"
+                />
+              </div>
+              <p className="text-stone-500 text-sm">
+                Made with 💗 by Amit
+              </p>
+            </div>
+          </footer>
+        </body>
+      </html>
     </ClerkProvider>
   );
 }
