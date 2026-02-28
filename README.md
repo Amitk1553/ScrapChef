@@ -738,8 +738,7 @@ For issues or questions:
 
 - 📝 Open an issue on GitHub
 - 💬 Create a discussion for questions
-- 📧 Contact: [your-email@example.com]
-- 📚 Documentation: [link to wiki or docs site]
+- 📧 Contact: [amitkuamr1553p@gmail.com]
 
 ## Roadmap
 
