@@ -738,7 +738,7 @@ For issues or questions:
 
 - 📝 Open an issue on GitHub
 - 💬 Create a discussion for questions
-- 📧 Contact: [amitkuamr1553p@gmail.com]
+- 📧 Contact: [amitkumar1553p@gmail.com]
 
 ## Roadmap
 
