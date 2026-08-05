@@ -1,4 +1,8 @@
-"use client";
+"use client"; // useParams is a client component hook, so this page must be a client component
+// This page is a client component because it uses the useParams hook from Next.js, 
+// which is only available in client components. 
+// The useParams hook allows us to access the dynamic route parameters,
+//  in this case, the category of recipes.
 
 import { useParams } from "next/navigation";
 import RecipeGrid from "@/components/RecipeGrid";
