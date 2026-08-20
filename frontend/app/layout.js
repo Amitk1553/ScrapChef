@@ -8,6 +8,7 @@ import Image from "next/image";
 
 const inter = Inter({ subsets: ["latin"] });
 
+
 export const metadata = {
   title: "ScrapChef - AI Recipes Platform",
   description: "",

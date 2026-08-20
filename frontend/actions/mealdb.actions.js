@@ -2,7 +2,7 @@
 
 const MEALDB_BASE = "https://www.themealdb.com/api/json/v1/1";
 
-// Get random recipe of the day
+// Get random recipe of the day from mealdb api
 export async function getRecipeOfTheDay() {
   try {
     const response = await fetch(`${MEALDB_BASE}/random.php`, {

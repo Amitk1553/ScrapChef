@@ -9,7 +9,7 @@ import RecipeCard from "@/components/RecipeCard";
 export default function RecipeGrid({
   type, // "category" or "cuisine"
   value, // actual category/cuisine name
-  fetchAction, // server action to fetch meals
+  fetchAction, //server action to fetch meals
   backLink = "/dashboard",
 }) {
   const { loading, data, fn: fetchMeals } = useFetch(fetchAction);

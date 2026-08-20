@@ -13,101 +13,83 @@ export default async function Home() {
   const subscriptionTier = has({ plan: "pro" }) ? "pro" : "free";
   return (
     <div className="min-h-screen bg-stone-50 text-stone-900">
-      <section className="pt-32 pb-20 px-4">
-        <div className="max-w-6xl mx-auto">
-          <div className="flex flex-col md:flex-row items-center gap-12 md:gap-20">
-            {/* Text content */}
-            <div className="flex-1 text-center md:text-left">
-              <Badge
-                variant="outline"
-                className="border-2 border-burntOrange-600 text-burntOrange-700 bg-burntOrange-50 text-sm font-bold
-              uppercase tracking-wide"
-              >
-                <Flame className="mr-1" />
-                #1 AI Cooking Assistant
-              </Badge>
-
-              <h1
-                className="text-6xl md:text-8xl font-bold mb-6 leading-[0.9]
-              tracking-tight"
-              >
-                Turn your{" "}
-                <span className="italic underline decoration-4 decoration-burntOrange-600">
-                  leftovers
-                </span>{" "}
-                into <br />
-                delicious meals.
-              </h1>
-
-              <p
-                className="text-xl md:text-2xl text-stone-600 mb-10 max-w-lg mx-auto
-              md:mx-0 font-light"
-              >
-                Snap a photo of your fridge. We&apos;ll tell you what to cook.
-                Save money, reduce waste, and eat better tonight.
-              </p>
-
-              <Link href="/dashboard">
-                <Button
-                  size="xl"
-                  variant="primary"
-                  className="px-8 py-6 text-lg"
-                >
-                  Start Cooking Free <ArrowRight className="ml-2 w-5 h-5" />
-                </Button>
-              </Link>
-
-              <p className="mt-6 text-sm text-stone-500">
-                <span className="font-bold text-stone-900">10k+ cooks</span>{" "}
-                joined last month
-              </p>
-            </div>
-            {/* Hero Image */}
-            <Card className="relative aspect-square md:aspect-4/5 border-4 border-stone-900 bg-stone-200 overflow-hidden py-0">
-              <Image
-                src="/dish1.png"
-                alt="Delicious pasta dish"
-                width={500}
-                height={500}
-                className="w-full h-full object-cover"
-              />
-              {/* Floating Card */}
-              <Card className="absolute bottom-8 left-8 right-8 bg-white/95 backdrop-blur-sm border-2 border-stone-900 py-0">
-                <CardContent className="p-4">
-                  <div className="flex justify-between items-start mb-2">
-                    <div>
-                      <h3 className="font-bold text-lg">
-                        Warm Baby Potatoes & Broccoli with Olive Oil Hummus
-                      </h3>
-                      <div className="flex gap-0.5 mt-1">
-                        {[...Array(5)].map((_, i) => (
-                          <Star
-                            key={i}
-                            className="w-3 h-3 fill-burntOrange-500 text-burntOrange-500"
-                        
-                          />
-                        ))}
-                      </div>
+     <section className="relative pt-32 pb-32 px-4 min-h-[750px] flex items-center">
+        <div className="max-w-7xl mx-auto w-full relative flex items-center">
+          
+    
+          <div className="absolute top-1/2 -translate-y-1/2 right-0 w-full md:w-[60%] h-[550px] rounded-[2.5rem] overflow-hidden shadow-2xl">
+            <Image
+              src="/dish1.png"
+              alt="Delicious pasta dish"
+              width={1000}
+              height={800}
+              className="w-full h-full object-cover"
+              priority
+            />
+            
+            <Card className="absolute bottom-6 right-6 w-[calc(100%-3rem)] md:w-[360px] bg-white/90 backdrop-blur-md border border-white/40 shadow-xl rounded-2xl py-0">
+              <CardContent className="p-4">
+                <div className="flex justify-between items-start mb-2">
+                  <div className="pr-2">
+                    <h3 className="font-bold text-sm leading-tight text-stone-900">
+                      Warm Baby Potatoes & Broccoli with Olive Oil Hummus
+                    </h3>
+                    <div className="flex gap-1 mt-1.5">
+                      {[...Array(5)].map((_, i) => (
+                        <Star key={i} className="w-3 h-3 fill-burntOrange-500 text-burntOrange-500" />
+                      ))}
                     </div>
-                    <Badge
-                      variant="outline"
-                      className="border-2 border-green-700 bg-green-50 text-green-700 font-bold"
-                    >
-                      98% MATCH
-                    </Badge>
                   </div>
-                  <div className="flex gap-4 text-xs text-stone-500 font-medium">
-                    <span className="flex items-center gap-1">
-                      <Clock className="w-3 h-3" /> 25 mins
-                    </span>
-                    <span className="flex items-center gap-1">
-                      <Users className="w-3 h-3" /> 2 servings
-                    </span>
-                  </div>
-                </CardContent>
-              </Card>
+                  <Badge className="bg-green-100 text-green-800 border-green-200 shadow-none font-bold text-[10px] px-2 py-0.5 shrink-0">
+                    98% MATCH
+                  </Badge>
+                </div>
+                <div className="flex gap-4 text-xs text-stone-600 font-medium mt-3">
+                  <span className="flex items-center gap-1.5"><Clock className="w-3 h-3" /> 25 mins</span>
+                  <span className="flex items-center gap-1.5"><Users className="w-3 h-3" /> 2 servings</span>
+                </div>
+              </CardContent>
             </Card>
           </div>
+
+          <div className="relative z-10 w-full md:w-[50%] mt-40 md:mt-0 bg-white/70 backdrop-blur-xl p-8 md:p-12 rounded-[2.5rem] shadow-[0_20px_40px_-15px_rgba(0,0,0,0.1)] border border-white">
+            <Badge
+              variant="outline"
+              className="border-burntOrange-200 text-burntOrange-700 bg-white shadow-sm text-xs font-bold uppercase tracking-wide mb-8 px-4 py-1.5"
+            >
+              <Flame className="mr-2 w-4 h-4" />
+              #1 AI Cooking Assistant
+            </Badge>
+
+            <h1 className="text-5xl md:text-6xl font-bold mb-6 leading-[1.1] tracking-tight text-stone-900">
+              Your Next <br className="hidden md:block" />
+              <span className="italic text-burntOrange-600 underline decoration-4 underline-offset-8">
+                Favorite Meal
+              </span>{" "}
+              <br className="hidden md:block" />
+              Is Already in Your Fridge.
+            </h1>
+
+            <p className="text-lg md:text-xl text-stone-600 mb-10 font-light leading-relaxed max-w-md">
+              Snap a photo of your fridge. We&apos;ll tell you what to cook.
+              Save money, reduce waste, and eat better tonight.
+            </p>
+
+            <Link href="/dashboard">
+              <Button size="xl" className="bg-burntOrange-600 hover:bg-burntOrange-700 text-white px-8 py-6 text-lg rounded-2xl shadow-lg shadow-burntOrange-600/20 transition-all hover:scale-[1.02]">
+                Start Cooking Free <ArrowRight className="ml-2 w-6 h-6" />
+              </Button>
+            </Link>
+
+            <p className="mt-8 text-sm text-stone-500 flex items-center gap-2">
+              <span className="flex -space-x-2">
+                <span className="w-8 h-8 rounded-full bg-stone-200 border-2 border-white"></span>
+                <span className="w-8 h-8 rounded-full bg-stone-300 border-2 border-white"></span>
+              </span>
+              <span className="font-bold text-stone-900">10k+ cooks</span> joined last month
+            </p>
+          </div>
+
         </div>
       </section>
 
@@ -217,4 +199,5 @@ export default async function Home() {
 
     </div>
   );
+
 }

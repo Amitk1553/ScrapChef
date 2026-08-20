@@ -26,7 +26,7 @@ function normalizeTitle(title) {
 async function fetchRecipeImage(recipeName) {
   try {
     if (!UNSPLASH_ACCESS_KEY) {
-      console.warn("⚠️ UNSPLASH_ACCESS_KEY not set, skipping image fetch");
+      console.warn("UNSPLASH_ACCESS_KEY not set, skipping image fetch");
       return "";
     }
 
@@ -51,7 +51,7 @@ async function fetchRecipeImage(recipeName) {
 
     if (data.results && data.results.length > 0) {
       const photo = data.results[0];
-      console.log("✅ Found Unsplash image:", photo.urls.regular);
+      console.log("Found Unsplash image:", photo.urls.regular);
       return photo.urls.regular;
     }
 
@@ -76,13 +76,13 @@ export async function getOrGenerateRecipe(formData) {
       throw new Error("Recipe name is required");
     }
 
-    // Normalize the title (e.g., "apple cake" → "Apple Cake")
+    // Normalize the title ("apple cake" → "Apple Cake")
     const normalizedTitle = normalizeTitle(recipeName);
-    console.log("🔍 Searching for recipe:", normalizedTitle);
+    console.log("Searching for recipe:", normalizedTitle);
 
     const isPro = user.subscriptionTier === "pro";
 
-    // Step 1: Check if recipe already exists in DB (case-insensitive search)
+    // step - 1 Checking if recipe already exists in DB (case-insensitive search)
     const searchResponse = await fetch(
       `${STRAPI_URL}/api/recipes?filters[title][$eqi]=${encodeURIComponent(
         normalizedTitle
@@ -99,7 +99,7 @@ export async function getOrGenerateRecipe(formData) {
       const searchData = await searchResponse.json();
 
       if (searchData.data && searchData.data.length > 0) {
-        console.log("✅ Recipe found in database:", searchData.data[0].id);
+        console.log("Recipe found in database:", searchData.data[0].id);
 
         // Check if user has saved this recipe
         const savedRecipeResponse = await fetch(
@@ -131,7 +131,7 @@ export async function getOrGenerateRecipe(formData) {
     }
 
     // Step 2: Recipe doesn't exist, generate with Gemini
-    console.log("🤖 Recipe not found, generating with Gemini...");
+    console.log("Recipe not found, generating with Gemini...");
 
     const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash-lite" });
 
@@ -268,7 +268,7 @@ Guidelines:
       : "other";
 
     // Step 3: Fetch image from Unsplash
-    console.log("🖼️ Fetching image from Unsplash...");
+    console.log("Fetching image from Unsplash...");
     const imageUrl = await fetchRecipeImage(normalizedTitle);
 
     // Step 4: Save generated recipe to database
@@ -293,7 +293,7 @@ Guidelines:
     };
 
     console.log(
-      "📤 Saving new recipe to database with title:",
+      "Saving new recipe to database with title:",
       normalizedTitle
     );
 
@@ -313,7 +313,7 @@ Guidelines:
     }
 
     const createdRecipe = await createRecipeResponse.json();
-    console.log("✅ Recipe saved to database:", createdRecipe.data.id);
+    console.log("Recipe saved to database:", createdRecipe.data.id);
 
     return {
       success: true,
@@ -395,7 +395,7 @@ export async function saveRecipeToCollection(formData) {
     }
 
     const savedRecipe = await saveResponse.json();
-    console.log("✅ Recipe saved to user collection:", savedRecipe.data.id);
+    console.log("Recipe saved to user collection:", savedRecipe.data.id);
 
     return {
       success: true,
@@ -446,7 +446,7 @@ export async function removeRecipeFromCollection(formData) {
       };
     }
 
-    // Delete saved recipe relation
+    // Delete saved recipe relation, here actual removal occurs
     const savedRecipeId = searchData.data[0].id;
     const deleteResponse = await fetch(
       `${STRAPI_URL}/api/saved-recipes/${savedRecipeId}`,
@@ -462,7 +462,7 @@ export async function removeRecipeFromCollection(formData) {
       throw new Error("Failed to remove recipe from collection");
     }
 
-    console.log("✅ Recipe removed from user collection");
+    console.log("Recipe removed from user collection");
 
     return {
       success: true,
@@ -482,11 +482,11 @@ export async function getRecipesByPantryIngredients() {
       throw new Error("User not authenticated");
     }
 
-    // ✅ ARCJET RATE LIMIT CHECK
+    // Here I am checking Arcjet rate limit
     const isPro = user.subscriptionTier === "pro";
     const arcjetClient = isPro ? proTierLimit : freeMealRecommendations;
 
-    // Create a request object for Arcjet
+    // Creating a request object for Arcjet
     const req = await request();
 
     const decision = await arcjetClient.protect(req, {
@@ -505,7 +505,7 @@ export async function getRecipesByPantryIngredients() {
       throw new Error("Request denied");
     }
 
-    // Get user's pantry items
+    // Getting user's pantry items
     const pantryResponse = await fetch(
       `${STRAPI_URL}/api/pantry-items?filters[owner][id][$eq]=${user.id}`,
       {
@@ -531,7 +531,7 @@ export async function getRecipesByPantryIngredients() {
 
     const ingredients = pantryData.data.map((item) => item.name).join(", ");
 
-    console.log("🥘 Finding recipes for ingredients:", ingredients);
+    console.log("Finding recipes for ingredients:", ingredients);
 
     const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash-lite" });
 
@@ -569,7 +569,7 @@ Rules:
     let recipeSuggestions;
     try {
       const cleanText = text
-        .replace(/```json\n?/g, "")
+        .replace(/```json\n?/g, "") // regex helps to remove any accidental markdown backticks
         .replace(/```\n?/g, "")
         .trim();
       recipeSuggestions = JSON.parse(cleanText);

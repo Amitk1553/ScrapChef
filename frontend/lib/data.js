@@ -55,7 +55,7 @@ export const HOW_IT_WORKS_STEPS = [
   },
 ];
 
-// Helper function for category emojis
+//Helper function for category emojis
 export function getCategoryEmoji(category) {
   const emojiMap = {
     Beef: "🥩",

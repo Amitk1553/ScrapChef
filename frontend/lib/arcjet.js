@@ -6,7 +6,7 @@ export const aj = arcjet({
   rules: [
     // Shield WAF - protect against common attacks
     shield({
-      mode: "LIVE", // Use "DRY_RUN" during development to test
+      mode: "LIVE", // "DRY_RUN" 
     }),
 
     // Bot protection - allow search engines only
@@ -23,7 +23,7 @@ export const freePantryScans = aj.withRule(
     mode: "LIVE",
     characteristics: ["userId"], // Track by Clerk user ID
     refillRate: 10, // 10 tokens
-    interval: "30d", // per month (30 days)
+    interval: "30d", // per month
     capacity: 10, // max 10 tokens
   })
 );

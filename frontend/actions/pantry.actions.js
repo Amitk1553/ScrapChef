@@ -47,17 +47,18 @@ export async function scanPantryImage(formData) {
       throw new Error("Request denied by security system");
     }
 
+    // getting the image from the request, ye pahla step hai
     const imageFile = formData.get("image");
     if (!imageFile) {
       throw new Error("No image provided");
     }
 
-    // Convert image to base64
+    // Convert image to base64, this is the second step
     const bytes = await imageFile.arrayBuffer();
     const buffer = Buffer.from(bytes);
     const base64Image = buffer.toString("base64");
 
-    // Call Gemini Vision API
+    // Call Gemini Vision API, 3rd
     const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash-lite" });
 
     const prompt = `
@@ -81,6 +82,7 @@ Rules:
 - Common pantry staples are acceptable (salt, pepper, oil)
 `;
 
+    // Send Image and prompt to Google 4th
     const result = await model.generateContent([
       prompt,
       {
@@ -91,6 +93,7 @@ Rules:
       },
     ]);
 
+    // Cleaning and Parsing the AI's reply
     const response = await result.response;
     const text = response.text();
 

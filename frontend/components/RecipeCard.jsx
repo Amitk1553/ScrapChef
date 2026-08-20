@@ -13,9 +13,9 @@ import {
 } from "@/components/ui/card";
 
 export default function RecipeCard({ recipe, variant = "default" }) {
-  // Handle different recipe data structures
+  // Handle different recipe data structure
   const getRecipeData = () => {
-    // For MealDB recipes (category/cuisine pages)
+    // For MealDB recipes
     if (recipe.strMeal) {
       return {
         title: recipe.strMeal,
