@@ -15,8 +15,8 @@ A full-stack recipe discovery and management platform that helps users find reci
 ## 🛠 Tech Stack
 
 - **Frontend:** Next.js 15 (App Router), React 18, Tailwind CSS, Shadcn/ui
-- **Backend:** Strapi (Headless CMS), Node.js, Express
-- **Database:** PostgreSQL (Neon for Production), SQLite (Local Development)
+- **Backend:** Strapi (Headless CMS), Node.js, Express (Hosted on Render.com)
+- **Database:** PostgreSQL (Neon Serverless for Production), SQLite (Local Development)
 - **External APIs:** Gemini AI, The Meal DB, Unsplash, Arcjet (Security)
 
 ## 🚀 Quick Start
@@ -24,7 +24,7 @@ A full-stack recipe discovery and management platform that helps users find reci
 ### 1. Clone & Install Dependencies
 
 ```bash
-git clone [https://github.com/yourusername/scrapchef.git](https://github.com/yourusername/scrapchef.git)
+git clone [https://github.com/Amitk1553/ScrapChef.git](https://github.com/Amitk1553/ScrapChef.git)
 cd scrapchef
 
 # Install backend dependencies
@@ -35,10 +35,11 @@ npm install
 cd ../frontend
 npm install
 
+
 2. Environment Variables
 You will need to set up your environment variables before running the application.
 
-In the backend/ directory, create a .env file (use .env.example as a template) and add your database credentials and JWT secrets.
+In the backend/ directory, create a .env file (use .env.example as a template) and add your database credentials and Strapi secrets.
 
 In the frontend/ directory, create a .env.local file and add your API keys:
 
@@ -48,7 +49,7 @@ Gemini AI API Key
 
 Unsplash Access Key
 
-Backend URL (http://localhost:1337 for local dev)
+Backend URL (http://localhost:1337 for local dev or your live Render URL for production)
 
 3. Run Locally
 You will need two terminal windows to run both servers simultaneously.
@@ -59,6 +60,7 @@ Bash
 cd backend
 npm run develop
 Backend API runs at http://localhost:1337
+
 Admin Panel runs at http://localhost:1337/admin
 
 Terminal 2: Start the Frontend (Next.js)
