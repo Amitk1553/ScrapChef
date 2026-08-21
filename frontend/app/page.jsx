@@ -13,11 +13,50 @@ export default async function Home() {
   const subscriptionTier = has({ plan: "pro" }) ? "pro" : "free";
   return (
     <div className="min-h-screen bg-stone-50 text-stone-900">
-     <section className="relative pt-32 pb-32 px-4 min-h-[750px] flex items-center">
-        <div className="max-w-7xl mx-auto w-full relative flex items-center">
+    <section className="relative pt-28 pb-20 md:pt-32 md:pb-32 px-4 md:min-h-[750px] flex items-center">
+        <div className="max-w-7xl mx-auto w-full relative flex flex-col md:block">
           
-    
-          <div className="absolute top-1/2 -translate-y-1/2 right-0 w-full md:w-[60%] h-[550px] rounded-[2.5rem] overflow-hidden shadow-2xl">
+          {/* 1. Overlapping Glass Text Box (Mobile: Order 1) */}
+          <div className="relative z-10 w-full md:w-[50%] bg-white/70 backdrop-blur-xl p-6 sm:p-8 md:p-12 rounded-[2rem] md:rounded-[2.5rem] shadow-[0_20px_40px_-15px_rgba(0,0,0,0.1)] border border-white order-1 md:order-none">
+            <Badge
+              variant="outline"
+              className="border-burntOrange-200 text-burntOrange-700 bg-white shadow-sm text-xs font-bold uppercase tracking-wide mb-6 md:mb-8 px-4 py-1.5"
+            >
+              <Flame className="mr-2 w-4 h-4" />
+              #1 AI Cooking Assistant
+            </Badge>
+
+            <h1 className="text-5xl md:text-6xl font-bold mb-6 leading-[1.1] tracking-tight text-stone-900">
+              Your Next <br className="hidden md:block" />
+              <span className="italic text-green-900 underline decoration-4 underline-offset-8">
+                Favorite Meal
+              </span>{" "}
+              <br className="hidden md:block" />
+              Is Already in Your Fridge.
+            </h1>
+
+            <p className="text-lg md:text-xl text-stone-600 mb-8 md:mb-10 font-light leading-relaxed max-w-md">
+              Snap a photo of your fridge. We&apos;ll tell you what to cook.
+              Save money, reduce waste, and eat better tonight.
+            </p>
+
+            <Link href="/dashboard">
+              <Button size="xl" className="bg-burntOrange-600 hover:bg-burntOrange-700 text-white px-8 py-6 text-lg rounded-2xl shadow-lg shadow-burntOrange-600/20 transition-all hover:scale-[1.02] w-full sm:w-auto">
+                Start Cooking Free <ArrowRight className="ml-2 w-6 h-6" />
+              </Button>
+            </Link>
+
+            <p className="mt-8 text-sm text-stone-500 flex items-center gap-2">
+              <span className="flex -space-x-2">
+                <span className="w-8 h-8 rounded-full bg-stone-200 border-2 border-white"></span>
+                <span className="w-8 h-8 rounded-full bg-stone-300 border-2 border-white"></span>
+              </span>
+              <span className="font-bold text-stone-900">10k+ cooks</span> joined last month
+            </p>
+          </div>
+
+          {/* 2. Background Image (Mobile: Order 2, standard layout | Desktop: Absolute right) */}
+          <div className="relative md:absolute md:top-1/2 md:-translate-y-1/2 right-0 w-full md:w-[60%] h-[400px] sm:h-[500px] md:h-[550px] rounded-[2rem] md:rounded-[2.5rem] overflow-hidden shadow-2xl order-2 md:order-none mt-6 md:mt-0">
             <Image
               src="/dish1.png"
               alt="Delicious pasta dish"
@@ -27,7 +66,8 @@ export default async function Home() {
               priority
             />
             
-            <Card className="absolute bottom-6 right-6 w-[calc(100%-3rem)] md:w-[360px] bg-white/90 backdrop-blur-md border border-white/40 shadow-xl rounded-2xl py-0">
+            {/* Floating Recipe Card - Responsive positioning */}
+            <Card className="absolute bottom-4 left-4 right-4 md:left-auto md:bottom-6 md:right-6 md:w-[360px] bg-white/90 backdrop-blur-md border border-white/40 shadow-xl rounded-2xl py-0">
               <CardContent className="p-4">
                 <div className="flex justify-between items-start mb-2">
                   <div className="pr-2">
@@ -50,44 +90,6 @@ export default async function Home() {
                 </div>
               </CardContent>
             </Card>
-          </div>
-
-          <div className="relative z-10 w-full md:w-[50%] mt-40 md:mt-0 bg-white/70 backdrop-blur-xl p-8 md:p-12 rounded-[2.5rem] shadow-[0_20px_40px_-15px_rgba(0,0,0,0.1)] border border-white">
-            <Badge
-              variant="outline"
-              className="border-burntOrange-200 text-burntOrange-700 bg-white shadow-sm text-xs font-bold uppercase tracking-wide mb-8 px-4 py-1.5"
-            >
-              <Flame className="mr-2 w-4 h-4" />
-              #1 AI Cooking Assistant
-            </Badge>
-
-            <h1 className="text-5xl md:text-6xl font-bold mb-6 leading-[1.1] tracking-tight text-stone-900">
-              Your Next <br className="hidden md:block" />
-              <span className="italic text-burntOrange-600 underline decoration-4 underline-offset-8">
-                Favorite Meal
-              </span>{" "}
-              <br className="hidden md:block" />
-              Is Already in Your Fridge.
-            </h1>
-
-            <p className="text-lg md:text-xl text-stone-600 mb-10 font-light leading-relaxed max-w-md">
-              Snap a photo of your fridge. We&apos;ll tell you what to cook.
-              Save money, reduce waste, and eat better tonight.
-            </p>
-
-            <Link href="/dashboard">
-              <Button size="xl" className="bg-burntOrange-600 hover:bg-burntOrange-700 text-white px-8 py-6 text-lg rounded-2xl shadow-lg shadow-burntOrange-600/20 transition-all hover:scale-[1.02]">
-                Start Cooking Free <ArrowRight className="ml-2 w-6 h-6" />
-              </Button>
-            </Link>
-
-            <p className="mt-8 text-sm text-stone-500 flex items-center gap-2">
-              <span className="flex -space-x-2">
-                <span className="w-8 h-8 rounded-full bg-stone-200 border-2 border-white"></span>
-                <span className="w-8 h-8 rounded-full bg-stone-300 border-2 border-white"></span>
-              </span>
-              <span className="font-bold text-stone-900">10k+ cooks</span> joined last month
-            </p>
           </div>
 
         </div>

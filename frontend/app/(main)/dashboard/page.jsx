@@ -192,3 +192,4 @@ export default async function DashboardPage() {
     </div>
   );
 }
+// This page will be the main dashboard, after user logs in this page will be displayed.

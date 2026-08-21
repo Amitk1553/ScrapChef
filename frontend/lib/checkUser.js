@@ -35,7 +35,7 @@ export const checkUser = async () => {
     // if backend rejects the request, log the error and return null
     if (!existingUserResponse.ok) {
       const errorText = await existingUserResponse.text();
-      console.error("Strapi error response:", errorText);
+      console.warn("Strapi error response:", errorText);
       return null;
     }
 
