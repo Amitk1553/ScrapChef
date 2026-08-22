@@ -57,7 +57,7 @@ export default async function DashboardPage() {
 
             <Link
               href={`/recipe?cook=${encodeURIComponent(
-                recipeOfTheDay.strMeal
+                recipeOfTheDay.strMeal,
               )}`}
             >
               <div className="relative bg-white border-2 border-stone-900 overflow-hidden hover:border-burntOrange-600 hover:shadow-lg transition-all duration-300 group cursor-pointer">
@@ -167,9 +167,9 @@ export default async function DashboardPage() {
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
-            {areas.map((area) => (
+            {areas.map((area, index) => (
               <Link
-                key={area.strArea}
+                key={`${area.strArea}-${index}`}
                 href={`/recipes/cuisine/${area.strArea
                   .toLowerCase()
                   .replace(/\s+/g, "-")}`}

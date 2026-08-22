@@ -257,7 +257,7 @@ Guidelines:
       "moroccan",
       "brazilian",
       "caribbean",
-      "middle-eastern",
+      "middle - eastern",
       "british",
       "german",
       "portuguese",

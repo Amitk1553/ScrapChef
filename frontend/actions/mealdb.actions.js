@@ -94,7 +94,13 @@ export async function getMealsByCategory(category) {
 // Get meals by area
 export async function getMealsByArea(area) {
   try {
-    const response = await fetch(`${MEALDB_BASE}/filter.php?a=${area}`, {
+    // Convert URL slug (e.g., "new-zealand" or "indian") into MealDB format (e.g., "New Zealand" or "Indian")
+    const formattedArea = area
+      .split("-")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+      .join(" ");
+
+    const response = await fetch(`${MEALDB_BASE}/filter.php?a=${formattedArea}`, {
       next: { revalidate: 86400 }, // Cache for 24 hours
     });
 
@@ -106,7 +112,7 @@ export async function getMealsByArea(area) {
     return {
       success: true,
       meals: data.meals || [],
-      area,
+      area: formattedArea,
     };
   } catch (error) {
     console.error("Error fetching meals by area:", error);
