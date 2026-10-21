@@ -5,22 +5,23 @@ const STRAPI_URL =
 const STRAPI_API_TOKEN = process.env.STRAPI_API_TOKEN;
 
 export const checkUser = async () => {
-  const user = await currentUser();
-
-  if (!user) {
-    console.log("No User found");
-    return null;
-  }
-
-  if (!STRAPI_API_TOKEN) {
-    console.error("❌ STRAPI_API_TOKEN is missing in .env.local");
-    return null;
-  }
-
-  const { has } = await auth();
-  const subscriptionTier = has({ plan: "pro" }) ? "pro" : "free";
-
   try {
+    const user = await currentUser();
+
+    if (!user) {
+      console.log("No User found");
+      return null;
+    }
+
+    if (!STRAPI_API_TOKEN) {
+      console.error("❌ STRAPI_API_TOKEN is missing in .env.local");
+      return null;
+    }
+
+    const { has } = await auth();
+    const subscriptionTier =
+      has && typeof has === "function" && has({ plan: "pro" }) ? "pro" : "free";
+
     // Check if user exists in Strapi
     const existingUserResponse = await fetch(
       `${STRAPI_URL}/api/users?filters[clerkId][$eq]=${user.id}`,
@@ -82,8 +83,10 @@ export const checkUser = async () => {
     // Create new user
     const userData = {
       username:
-        user.username || user.emailAddresses[0].emailAddress.split("@")[0],
-      email: user.emailAddresses[0].emailAddress,
+        user.username ||
+        user.emailAddresses?.[0]?.emailAddress?.split("@")[0] ||
+        "user",
+      email: user.emailAddresses?.[0]?.emailAddress || "",
       password: `clerk_managed_${user.id}_${Date.now()}`,
       confirmed: true,
       blocked: false,
@@ -113,7 +116,7 @@ export const checkUser = async () => {
     const newUser = await newUserResponse.json();
     return newUser;
   } catch (error) {
-    console.error("❌ Error in checkUser:", error.message);
+    console.error("❌ Error in checkUser:", error?.errors || error?.message || error);
     return null;
   }
 };

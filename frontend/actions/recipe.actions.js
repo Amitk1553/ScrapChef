@@ -4,6 +4,7 @@ import { checkUser } from "@/lib/checkUser";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { freeMealRecommendations, proTierLimit } from "@/lib/arcjet";
 import { request } from "@arcjet/next";
+import { embedRecipe } from "@/lib/embeddings";
 
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 const STRAPI_URL =
@@ -315,9 +316,28 @@ Guidelines:
     const createdRecipe = await createRecipeResponse.json();
     console.log("Recipe saved to database:", createdRecipe.data.id);
 
+    // Auto-embed the new recipe for RAG vector search
+    try {
+      await embedRecipe({
+        id: createdRecipe.data.id,
+        title: normalizedTitle,
+        description: recipeData.description,
+        cuisine,
+        category,
+        ingredients: recipeData.ingredients,
+        instructions: recipeData.instructions,
+        tips: recipeData.tips,
+      });
+      console.log("✅ Recipe auto-embedded for RAG search");
+    } catch (embedError) {
+      // Embedding failure should never break recipe creation
+      console.error("⚠️ Failed to embed recipe (non-blocking):", embedError.message);
+    }
+
     return {
       success: true,
       recipe: {
+        id: createdRecipe.data.id,
         ...recipeData,
         title: normalizedTitle,
         category,
@@ -396,6 +416,25 @@ export async function saveRecipeToCollection(formData) {
 
     const savedRecipe = await saveResponse.json();
     console.log("Recipe saved to user collection:", savedRecipe.data.id);
+
+    // Ensure recipe is embedded in vector database for AI chat RAG
+    try {
+      const recipeFetch = await fetch(
+        `${STRAPI_URL}/api/recipes?filters[id][$eq]=${recipeId}&populate=*`,
+        {
+          headers: { Authorization: `Bearer ${STRAPI_API_TOKEN}` },
+          cache: "no-store",
+        }
+      );
+      if (recipeFetch.ok) {
+        const recipeJson = await recipeFetch.json();
+        if (recipeJson.data && recipeJson.data.length > 0) {
+          await embedRecipe(recipeJson.data[0]);
+        }
+      }
+    } catch (embedError) {
+      console.warn("⚠️ Non-blocking embed on save failed:", embedError?.message || embedError);
+    }
 
     return {
       success: true,

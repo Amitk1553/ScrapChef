@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useState, Suspense } from "react";
+import { useEffect, useState, Suspense, lazy } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
+import dynamic from "next/dynamic";
 import {
   ArrowLeft,
   Clock,
@@ -31,6 +32,11 @@ import { PDFDownloadLink } from "@react-pdf/renderer";
 import { RecipePDF } from "@/components/RecipePDF";
 import { ClockLoader } from "react-spinners";
 import ProLockedSection from "@/components/ProLockedSection";
+
+// Dynamically import AiChefChat to avoid SSR issues
+const AiChefChat = dynamic(() => import("@/components/AiChefChat"), {
+  ssr: false,
+});
 
 function RecipeContent() {
   const searchParams = useSearchParams();
@@ -585,6 +591,14 @@ function RecipeContent() {
           </div>
         </div>
       </div>
+
+      {/* AI Chef Chat Panel */}
+      {recipe && (
+        <AiChefChat
+          key={`ai-chef-${recipe.id || recipe.documentId || recipe.title || "recipe"}`}
+          recipeContext={recipe}
+        />
+      )}
     </div>
   );
 }

@@ -9,11 +9,15 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@ai-sdk/google": "^4.0.93",
+    "@ai-sdk/react": "^4.0.140",
     "@arcjet/next": "^1.1.0",
     "@clerk/nextjs": "^6.38.2",
     "@clerk/themes": "^2.4.55",
     "@google/generative-ai": "^0.24.1",
+    "@neondatabase/serverless": "^1.2.0",
     "@react-pdf/renderer": "^4.3.2",
+    "ai": "^7.0.137",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "lucide-react": "^0.575.0",

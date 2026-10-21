@@ -12,17 +12,19 @@ import PricingSection from "./PricingSection";
 export default function PricingModal({ subscriptionTier = "free", children }) {
   const [isOpen, setIsOpen] = useState(false);
 
-  // Only allow opening if user is on free plan
-  const canOpen = subscriptionTier === "free";
+  // If user is already on pro plan, render children directly (no dialog needed)
+  if (subscriptionTier === "pro") {
+    return <>{children}</>;
+  }
 
   return (
-    <Dialog open={isOpen} onOpenChange={canOpen ? setIsOpen : undefined}>
-      <DialogTrigger asChild disabled={!canOpen}>
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
+      <DialogTrigger asChild>
         {children}
       </DialogTrigger>
 
       <DialogContent className="p-8 pt-4 sm:max-w-4xl">
-        <DialogTitle />
+        <DialogTitle className="sr-only">Upgrade Plan</DialogTitle>
         <div>
           <PricingSection
             subscriptionTier={subscriptionTier}

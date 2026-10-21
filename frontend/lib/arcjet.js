@@ -1,12 +1,11 @@
 import arcjet, { shield, tokenBucket, detectBot } from "@arcjet/next";
 
-// Base Arcjet instance with global protections
 export const aj = arcjet({
   key: process.env.ARCJET_KEY,
   rules: [
-    // Shield WAF - protect against common attacks
+    // WAF
     shield({
-      mode: "LIVE", // "DRY_RUN" 
+      mode: "LIVE", 
     }),
 
     // Bot protection - allow search engines only
@@ -23,7 +22,7 @@ export const freePantryScans = aj.withRule(
     mode: "LIVE",
     characteristics: ["userId"], // Track by Clerk user ID
     refillRate: 10, // 10 tokens
-    interval: "30d", // per month
+    interval: "30d", 
     capacity: 10, // max 10 tokens
   })
 );
@@ -48,5 +47,16 @@ export const proTierLimit = aj.withRule(
     refillRate: 1000,
     interval: "1d",
     capacity: 1000,
+  })
+);
+
+// Free tier AI Chef chat messages (20 per day)
+export const freeChatMessages = aj.withRule(
+  tokenBucket({
+    mode: "LIVE",
+    characteristics: ["userId"],
+    refillRate: 20,
+    interval: "1d",
+    capacity: 20,
   })
 );
