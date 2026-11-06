@@ -52,8 +52,19 @@ async function fetchRecipeImage(recipeName) {
 
     if (data.results && data.results.length > 0) {
       const photo = data.results[0];
-      console.log("Found Unsplash image:", photo.urls.regular);
-      return photo.urls.regular;
+      let imageUrl = photo.urls.regular;
+
+      // Strip the huge base64 `ixid` parameter so the URL never exceeds 255 chars in PostgreSQL
+      try {
+        const urlObj = new URL(imageUrl);
+        urlObj.searchParams.delete("ixid");
+        imageUrl = urlObj.toString();
+      } catch (e) {
+        // Fallback if URL parsing fails
+      }
+
+      console.log("Found Unsplash image:", imageUrl);
+      return imageUrl;
     }
 
     console.log("ℹ️ No Unsplash image found for:", recipeName);
@@ -134,7 +145,7 @@ export async function getOrGenerateRecipe(formData) {
     // Step 2: Recipe doesn't exist, generate with Gemini
     console.log("Recipe not found, generating with Gemini...");
 
-    const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash-lite" });
+    const model = genAI.getGenerativeModel({ model: "gemini-3.5-flash-lite" });
 
     const prompt = `
 You are a professional chef and recipe expert. Generate a detailed recipe for: "${normalizedTitle}"
